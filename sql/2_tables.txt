@@ -1,0 +1,21 @@
+CREATE TABLE assets (
+    asset_id SERIAL PRIMARY KEY,
+    collected_at TIMESTAMP NOT NULL,
+    hostname TEXT NOT NULL,
+    username TEXT NOT NULL
+    -- add other fields from your current assets table if needed
+);
+
+
+
+
+CREATE TABLE downloads (
+    asset_id SERIAL PRIMARY KEY,
+    collected_at TIMESTAMP NOT NULL,
+    hostname TEXT NOT NULL,
+    username TEXT NOT NULL
+    -- add other fields from your current assets table if needed
+);
+
+
+
