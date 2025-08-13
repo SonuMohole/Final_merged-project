@@ -131,8 +131,6 @@ def log_download(os_name: str, ip: str):
 
     conn = get_db_connection()
     cur = conn.cursor()
-    asset_data = collect_asset_info()
-    print("Collected asset data:", asset_data)  
     cur.execute("""
         INSERT INTO downloads (download_time, ip_address, hostname, os_name)
         VALUES (NOW(), %s, %s, %s)
