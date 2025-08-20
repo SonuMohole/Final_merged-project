@@ -2,21 +2,21 @@ DO $$
 DECLARE
     dyn_sql text;
 BEGIN
-    -- 1. Drop old table if exists
-    EXECUTE 'DROP TABLE IF EXISTS software_pivot';
+    -- 1. Drop old pivot table if exists
+    EXECUTE 'DROP TABLE IF EXISTS software_pivot1';
 
     -- 2. Build CREATE TABLE statement with 1000 software columns
-    dyn_sql := 'CREATE TABLE software_pivot AS SELECT collected_at, hostname, username';
+    dyn_sql := 'CREATE TABLE software_pivot1 AS SELECT collected_at, hostname, username';
 
     FOR i IN 1..1000 LOOP
         dyn_sql := dyn_sql || format(', NULL::text AS software%s', i);
     END LOOP;
 
-    dyn_sql := dyn_sql || ' FROM assets WHERE false'; -- empty table structure
+    dyn_sql := dyn_sql || ' FROM assets WHERE false'; -- creates empty structure
     EXECUTE dyn_sql;
 
     -- 3. Insert transformed data
-    dyn_sql := 'INSERT INTO software_pivot SELECT collected_at, hostname, username';
+    dyn_sql := 'INSERT INTO software_pivot1 SELECT collected_at, hostname, username';
     FOR i IN 1..1000 LOOP
         dyn_sql := dyn_sql || format(
             ', split_part(software, '','', %s) AS software%s', 
@@ -27,3 +27,6 @@ BEGIN
     EXECUTE dyn_sql;
 
 END$$;
+
+
+SELECT * FROM software_pivot1;
